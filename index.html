@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bs jss aipopov</title>
+</head>
+<body>
+
+</body>
+</html>
+
+<script>
+    const onLoad = (evt) => {
+        const script = evt.currentTarget;
+        const name = script.dataset.name;
+        const newElement = document.createElement(name);
+        document.body.prepend(newElement)
+    }
+    
+    const onError = (err) => {
+    }
+    
+    const components = [
+        'my-select'
+    ];
+    
+    components.forEach(component => {
+        const script = document.createElement('script');
+        script.src = `./${component}.js`;
+        script.dataset.name = component;
+        script.addEventListener('load', onLoad);
+        document.body.append(script);
+    });
+</script>
