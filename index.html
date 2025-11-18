@@ -15,6 +15,13 @@
         const script = evt.currentTarget;
         const name = script.dataset.name;
         const newElement = document.createElement(name);
+        if (name == 'my-select') {
+            newElement.innerHTML = `
+                <option value="opt1">Option 1</option>
+                <option value="opt2">Option 2</option>
+                <option value="opt3">Option 3</option>
+            `;
+        }
         document.body.prepend(newElement)
     }
     
