@@ -5,7 +5,12 @@
 
     class MyPanel extends HTMLElement {
 
-        #shadow 
+        #shadow; 
+        #subHeader
+
+        #subHeaderValue = ''
+
+        static observedAttributes = ["header", "sub-header"];
 
         constructor(){
             super();
@@ -14,6 +19,22 @@
         connectedCallback() {
             this.#shadow = this.attachShadow({ mode: "open" });
             this.#createTemplate();
+
+            this.#subHeader = this.#shadow.querySelector(".panel-subheader");
+            this.#setSubheader();
+        }
+
+        attributeChangedCallback(name, oldValue, newValue) {
+            if (name === "sub-header") {
+                this.#subHeaderValue = newValue;
+                this.#setSubheader();
+            }
+        }
+
+        #setSubheader() {
+            if (this.#subHeader) {
+                this.#subHeader.textContent = this.#subHeaderValue;
+            }
         }
 
         #createTemplate() {
@@ -24,6 +45,7 @@
                     <div class="panel-header">
                         <slot name="header"></slot>
                     </div>
+                    <p class="panel-subheader"></p>
                     <div class="panel-content">
                         <slot></slot>
                     </div>
@@ -35,6 +57,7 @@
                         --my-panel-border-radius: 6px;
                         --my-panel-content-padding: 0 1.125rem 1.125rem 1.125rem;
                         --my-panel-header-padding: 1.125rem;
+                        --my-panel-subheader-padding: 0rem 1.125rem 2rem;
                         --my-panel-title-font-weight: 600;
                     }
                     .panel {
@@ -44,6 +67,10 @@
                     .panel-header {
                         padding: var(--my-panel-header-padding);
                         font-weight: var(--my-panel-title-font-weight);
+                    }
+                    .panel-subheader {
+                        margin: 0;
+                        padding: var(--my-panel-subheader-padding);
                     }
                     .panel-content {
                         padding: var(--my-panel-content-padding);
